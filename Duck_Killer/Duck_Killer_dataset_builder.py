@@ -6,8 +6,8 @@ import tensorflow as tf
 import tensorflow_datasets as tfds
 import tensorflow_hub as hub
 
-
-class ExampleDataset(tfds.core.GeneratorBasedBuilder):
+#Rename your own dataset
+class DuckKiller(tfds.core.GeneratorBasedBuilder):
     """DatasetBuilder for example dataset."""
 
     VERSION = tfds.core.Version('1.0.0')
@@ -25,8 +25,14 @@ class ExampleDataset(tfds.core.GeneratorBasedBuilder):
             features=tfds.features.FeaturesDict({
                 'steps': tfds.features.Dataset({
                     'observation': tfds.features.FeaturesDict({
+                        # 'image': tfds.features.Image(
+                        #     shape=(64, 64, 3),
+                        #     dtype=np.uint8,
+                        #     encoding_format='png',
+                        #     doc='Main camera RGB observation.',
+                        # ),
                         'image': tfds.features.Image(
-                            shape=(64, 64, 3),
+                            shape=(480, 640, 3),
                             dtype=np.uint8,
                             encoding_format='png',
                             doc='Main camera RGB observation.',
@@ -37,18 +43,29 @@ class ExampleDataset(tfds.core.GeneratorBasedBuilder):
                             encoding_format='png',
                             doc='Wrist camera RGB observation.',
                         ),
+                        # 'state': tfds.features.Tensor(
+                        #     shape=(10,),
+                        #     dtype=np.float32,
+                        #     doc='Robot state, consists of [7x robot joint angles, '
+                        #         '2x gripper position, 1x door opening angle].',
+                        # )
                         'state': tfds.features.Tensor(
-                            shape=(10,),
+                            shape=(12,),
                             dtype=np.float32,
-                            doc='Robot state, consists of [7x robot joint angles, '
-                                '2x gripper position, 1x door opening angle].',
+                            doc='Robot state, consists of [6x robot joint angles, '
+                                '6x xyz,roll,pitch,yaw].',
                         )
                     }),
+                    # 'action': tfds.features.Tensor(
+                    #     shape=(10,),
+                    #     dtype=np.float32,
+                    #     doc='Robot action, consists of [7x joint velocities, '
+                    #         '2x gripper velocities, 1x terminate episode].',
+                    # ),
                     'action': tfds.features.Tensor(
-                        shape=(10,),
+                        shape=(6,),
                         dtype=np.float32,
-                        doc='Robot action, consists of [7x joint velocities, '
-                            '2x gripper velocities, 1x terminate episode].',
+                        doc='Robot action, consists of [6x euler action(xyz,roll,pitch,yaw)].',
                     ),
                     'discount': tfds.features.Scalar(
                         dtype=np.float32,
