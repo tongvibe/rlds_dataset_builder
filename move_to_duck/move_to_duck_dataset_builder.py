@@ -7,7 +7,7 @@ import tensorflow_datasets as tfds
 import tensorflow_hub as hub
 
 #Rename your own dataset
-class DuckKiller(tfds.core.GeneratorBasedBuilder):
+class MoveToDuck(tfds.core.GeneratorBasedBuilder):
     """DatasetBuilder for example dataset."""
 
     VERSION = tfds.core.Version('1.0.0')
@@ -88,7 +88,7 @@ class DuckKiller(tfds.core.GeneratorBasedBuilder):
                         doc='True on last step of the episode if it is a terminal step, True for demos.'
                     ),
                     'language_instruction': tfds.features.Text(
-                        doc='Language Instruction.'
+                        doc='Move to the bule duck.'
                     ),
                     'language_embedding': tfds.features.Tensor(
                         shape=(512,),

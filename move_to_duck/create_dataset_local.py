@@ -4,17 +4,15 @@ import os
 import pandas as pd
 from PIL import Image
 import ast
-N_TRAIN_EPISODES = 1
-N_VAL_EPISODES = 1
+# 定义数据集的基本目录
+base_dir_train = '/home/tong/robotic-ai/training_data/episode_{}/images'
+base_dir_val = '/home/tong/robotic-ai/training_data/episode_{}/images'
+base_csv_train = '/home/tong/robotic-ai/training_data/episode_{}/data.csv'
+base_csv_val = '/home/tong/robotic-ai/training_data/episode_{}/data.csv'
 
-
-
-# set path
-image_dir_train = '/home/tong/robotic-ai/training_data/episode_0/images'  
-csv_file_train = '/home/tong/robotic-ai/training_data/episode_0/data.csv'  
-
-image_dir_val = '/home/tong/robotic-ai/training_data/episode_1/images'  
-csv_file_val = '/home/tong/robotic-ai/training_data/episode_1/data.csv'  
+# 定义训练集和验证集的数量
+N_TRAIN_EPISODES = 8
+N_VAL_EPISODES = 3
 
 def create_real_episode(image_dir, csv_file, path):
     def parse_string_to_list(s):
@@ -44,20 +42,30 @@ def create_real_episode(image_dir, csv_file, path):
             'wrist_image': wrist_image,
             'state': state,
             'action': action,
-            'language_instruction': 'duck killer',  # 固定的语言指令
+            'language_instruction': 'move to the bule duck',  # 固定的语言指令
         }) 
     np.save(path, episode)
 
 
 # create real episodes for train and validation
 print("Generating train examples...")
-os.makedirs('./data/train', exist_ok=True)
+os.makedirs('data/train', exist_ok=True)
 for i in tqdm.tqdm(range(N_TRAIN_EPISODES)):
-    create_real_episode(image_dir_train, csv_file_train, f'./data/train/episode_{i}.npy')
+    image_dir_train = base_dir_train.format(i)
+    csv_file_train = base_csv_train.format(i)
+    print(f"Train image_dir: {image_dir_train}")
+    print(f"Train csv_file: {csv_file_train}") 
+    create_real_episode(image_dir_train, csv_file_train, f'data/train/episode_{i}.npy')
 
 print("Generating val examples...")
-os.makedirs('./data/val', exist_ok=True)
+os.makedirs('data/val', exist_ok=True)
 for i in tqdm.tqdm(range(N_VAL_EPISODES)):
-    create_real_episode(image_dir_val, csv_file_val,f'./data/val/episode_{i}.npy')
+    image_dir_val = base_dir_val.format(i + N_TRAIN_EPISODES)
+    csv_file_val = base_csv_val.format(i + N_TRAIN_EPISODES)
+    print(f"Val image_dir: {image_dir_val}")
+    print(f"Val csv_file: {csv_file_val}")
+    create_real_episode(image_dir_val, csv_file_val,f'data/val/episode_{i}.npy')
 
 print('Successfully created example data!')
+
+
