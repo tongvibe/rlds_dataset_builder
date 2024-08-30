@@ -88,7 +88,7 @@ class MoveToDuck(tfds.core.GeneratorBasedBuilder):
                         doc='True on last step of the episode if it is a terminal step, True for demos.'
                     ),
                     'language_instruction': tfds.features.Text(
-                        doc='Move to the bule duck.'
+                        doc='Move to the blue rubber duck.'
                     ),
                     'language_embedding': tfds.features.Tensor(
                         shape=(512,),

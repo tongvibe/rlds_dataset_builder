@@ -12,7 +12,7 @@ base_csv_val = '/home/tong/robotic-ai/training_data/episode_{}/data.csv'
 
 # 定义训练集和验证集的数量
 N_TRAIN_EPISODES = 8
-N_VAL_EPISODES = 3
+N_VAL_EPISODES = 4
 
 def create_real_episode(image_dir, csv_file, path):
     def parse_string_to_list(s):
@@ -42,7 +42,7 @@ def create_real_episode(image_dir, csv_file, path):
             'wrist_image': wrist_image,
             'state': state,
             'action': action,
-            'language_instruction': 'move to the bule duck',  # 固定的语言指令
+            'language_instruction': 'move to the blue rubber duck',  # 固定的语言指令
         }) 
     np.save(path, episode)
 
