@@ -4,4 +4,4 @@ Description is **formatted** as markdown.
 It should also contain any processing which has been applied (if any),
 (e.g. corrupted example skipped, images cropped,...):
 
-This is the demo for UR5 to grasp duck.
+This is the demo for UR5 to move to duck.
